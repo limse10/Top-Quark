@@ -1,13 +1,21 @@
 name: Telegram Updates
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: send message
+      - name: send push update
+        if: ${{ github.event_name == 'push'}}
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{ repo.namespace }} just pushed to ${{commit.ref}}.
+        if: ${{ github.event_name == 'pull_request'}}
+          uses: appleboy/telegram-action@master
+          with:
+            to: ${{ secrets.TELEGRAM_TO }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            args: ${{ repo.namespace }} opened a new pull request from $GITHUB_HEAD_REF to $GITHUB_BASE_REF.
