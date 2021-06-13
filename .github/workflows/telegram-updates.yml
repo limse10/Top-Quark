@@ -13,6 +13,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           args: ${{ repo.namespace }} just pushed to ${{commit.ref}}.
+      - name: send PR update
         if: ${{ github.event_name == 'pull_request'}}
           uses: appleboy/telegram-action@master
           with:
