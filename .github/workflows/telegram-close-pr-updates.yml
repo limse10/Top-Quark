@@ -1,0 +1,32 @@
+name: Telegram Close PR Update
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  merge_pr:
+    name: merge PR
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: send PR merged update
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{github.repository}} - ${{github.actor}} merged pull request ${{github.event.number}} from ${{github.head_ref}} to ${{github.base_ref}}.
+
+  close_pr:
+    name: close PR
+    if: github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: send PR closed update
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{github.repository}} - ${{github.actor}} closed pull request ${{github.event.number}} from ${{github.head_ref}} to ${{github.base_ref}} without merging.
