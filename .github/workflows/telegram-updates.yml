@@ -11,17 +11,19 @@ jobs:
         shell: bash
         run: |
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      - name: send push update
-        if: ${{ github.event_name == 'push'}}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: ${{github.repository}} - ${{github.actor}} just pushed to branch ${{ steps.vars.outputs.branch }}.
-      - name: send PR update
-        if: ${{ github.event_name == 'pull_request'}}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: ${{github.repository}} - ${{github.actor}} opened a new pull request from ${{github.head_ref}} to ${{github.base_ref}}.
+  push_update:
+    name: send push update
+    if: ${{ github.event_name == 'push'}}
+    uses: appleboy/telegram-action@master
+    with:
+      to: ${{ secrets.TELEGRAM_TO }}
+      token: ${{ secrets.TELEGRAM_TOKEN }}
+      args: ${{github.repository}} - ${{github.actor}} just pushed to branch ${{ steps.vars.outputs.branch }}.
+  pr_update:
+    name: send PR update
+    if: ${{ github.event_name == 'pull_request'}}
+    uses: appleboy/telegram-action@master
+    with:
+      to: ${{ secrets.TELEGRAM_TO }}
+      token: ${{ secrets.TELEGRAM_TOKEN }}
+      args: ${{github.repository}} - ${{github.actor}} opened a new pull request from ${{github.head_ref}} to ${{github.base_ref}}.
