@@ -16,7 +16,7 @@ jobs:
       - name: send PR update
         if: ${{ github.event_name == 'pull_request'}}
         uses: appleboy/telegram-action@master
-          with:
-            to: ${{ secrets.TELEGRAM_TO }}
-            token: ${{ secrets.TELEGRAM_TOKEN }}
-            args: ${{ repo.namespace }} opened a new pull request from $GITHUB_HEAD_REF to $GITHUB_BASE_REF.
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{ repo.namespace }} opened a new pull request from $GITHUB_HEAD_REF to $GITHUB_BASE_REF.
