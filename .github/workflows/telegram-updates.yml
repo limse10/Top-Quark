@@ -17,11 +17,11 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: ${{github.repo}} - ${{github.actor}} just pushed to branch ${{ steps.vars.outputs.branch }}.
+          args: ${{github.repository}} - ${{github.actor}} just pushed to branch ${{ steps.vars.outputs.branch }}.
       - name: send PR update
         if: ${{ github.event_name == 'pull_request'}}
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: ${{github.repo}} - ${{github.actor}} opened a new pull request from ${{github.head_ref}} to ${{github.base_ref}}.
+          args: ${{github.repository}} - ${{github.actor}} opened a new pull request from ${{github.head_ref}} to ${{github.base_ref}}.
