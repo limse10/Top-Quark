@@ -1,8 +1,11 @@
 name: Telegram Push Updates
-on: [push]
+on:
+  push:
+  pull_request:
+    types: [open]
 jobs:
   build:
-    name: Build
+    name: push
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
