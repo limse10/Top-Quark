@@ -14,16 +14,20 @@ jobs:
   push_update:
     name: send push update
     if: ${{ github.event_name == 'push'}}
-    uses: appleboy/telegram-action@master
-    with:
-      to: ${{ secrets.TELEGRAM_TO }}
-      token: ${{ secrets.TELEGRAM_TOKEN }}
-      args: ${{github.repository}} - ${{github.actor}} just pushed to branch ${{ steps.vars.outputs.branch }}.
+    steps:
+      - uses: appleboy/telegram-action@master
+      - name: send push update
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{github.repository}} - ${{github.actor}} just pushed to branch ${{ steps.vars.outputs.branch }}.
   pr_update:
     name: send PR update
     if: ${{ github.event_name == 'pull_request'}}
-    uses: appleboy/telegram-action@master
-    with:
-      to: ${{ secrets.TELEGRAM_TO }}
-      token: ${{ secrets.TELEGRAM_TOKEN }}
-      args: ${{github.repository}} - ${{github.actor}} opened a new pull request from ${{github.head_ref}} to ${{github.base_ref}}.
+    steps:
+      - uses: appleboy/telegram-action@master
+      - name: send PR update
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: ${{github.repository}} - ${{github.actor}} opened a new pull request from ${{github.head_ref}} to ${{github.base_ref}}.
